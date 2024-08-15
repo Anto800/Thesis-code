@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy-vnf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haproxy-vnf
+  template:
+    metadata:
+      labels:
+        app: haproxy-vnf
+    spec:
+      containers:
+        - name: haproxy-vnf
+          image: anto80/haproxy-vnf:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 8404
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/local/etc/haproxy/haproxy.cfg
+              subPath: haproxy.cfg
+      volumes:
+        - name: config-volume
+          configMap:
+            name: haproxy-config

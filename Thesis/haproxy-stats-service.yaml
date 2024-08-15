@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: haproxy-stats-service
+spec:
+  selector:
+    app: haproxy-vnf
+  ports:
+    - protocol: TCP
+      port: 8404
+      targetPort: 8404
+  type: ClusterIP
